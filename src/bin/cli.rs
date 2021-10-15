@@ -6,6 +6,7 @@ extern crate globwalk;
 
 use std::fs::File;
 use std::path::PathBuf;
+use std::env;
 
 use clap::{
     AppSettings,
@@ -60,7 +61,7 @@ macro_rules! size_format {
 
 #[derive(Clap)]
 #[clap(name = "wrap", about = "CLI utility for handling .wrap archive files")]
-#[clap(version = "0.1.0", author = "Daniel W. <delbato@pm.me>")]
+#[clap(version = env!("CARGO_PKG_VERSION"), author = "Daniel W. <delbato@pm.me>")]
 #[clap(setting = AppSettings::ColoredHelp)]
 struct RunArgs {
     #[clap(subcommand)]
