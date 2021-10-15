@@ -7,7 +7,6 @@ use std::io::{
 use std::ops::Drop;
 
 use bincode::serialize_into as bincode_write;
-use rmp_serde::encode::write as msgpack_write;
 use blake3::Hasher;
 
 use crate::shared::compression::Compression;

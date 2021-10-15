@@ -20,8 +20,6 @@ required-features = [ "cli" ]
 [dependencies]
 # Used for de-/serializing internal file structures
 serde = { version = "1.0.110", features = [ "derive" ] }
-rmpv = "1.0.0"
-rmp-serde = "1.0.0-beta.2"
 bincode = "1.3.3"
 # Used for compression
 zstd = "0.9.0"

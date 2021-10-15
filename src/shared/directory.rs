@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::ops::Range;
 
 use serde::{
@@ -12,7 +12,7 @@ use serde::{
 #[derive(Serialize, Deserialize)]
 pub struct Directory {
     /// Byte ranges of the file headers by filename
-    pub file_headers: HashMap<String, Range<u64>>,
+    pub file_headers: BTreeMap<String, Range<u64>>,
 }
 
 impl Directory {
@@ -35,7 +35,7 @@ impl Directory {
 impl Default for Directory {
     fn default() -> Self {
         Self {
-            file_headers: HashMap::new(),
+            file_headers: BTreeMap::new(),
         }
     }
 }

@@ -6,7 +6,6 @@ use std::io::{
 use std::ops::Range;
 
 use bincode::deserialize_from as bincode_read;
-use rmp_serde::decode::from_read as msgpack_read;
 
 use crate::read::file::File;
 use crate::shared::archive_header::ArchiveHeader;
@@ -53,8 +52,8 @@ impl<'r, R: Read + Seek + 'r> Archive<R> {
         source
             .seek(SeekFrom::Start(dir_begin))
             .map_err(|_| Error::CantReadDirectory)?;
-        let directory: Directory =
-            bincode_read(&mut source).map_err(|_| Error::CorruptDirectory)?;
+        let directory = bincode_read(&mut source)
+            .map_err(|_| Error::CorruptDirectory)?;
         Ok(Self {
             directory: directory,
             source: source,

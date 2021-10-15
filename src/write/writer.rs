@@ -1,4 +1,3 @@
-use std::arch;
 use std::io::{
     Seek,
     SeekFrom,
@@ -6,7 +5,6 @@ use std::io::{
 };
 
 use bincode::serialize_into as bincode_write;
-use rmp_serde::encode::write as msgpack_write;
 
 use crate::shared::archive_header::ArchiveHeader;
 use crate::shared::compression::Compression;
