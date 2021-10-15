@@ -1,0 +1,58 @@
+[package]
+name = "wrap-archive"
+version = "0.1.0"
+authors = ["Daniel Wanner <daniel.wanner@pm.me>"]
+edition = "2018"
+description = "An archive container format"
+readme = "README.md"
+
+exclude = [
+    ".vscode",
+    ".gitignore",
+    "tests/"
+]
+
+[[bin]]
+name = "wrap"
+path = "src/bin/cli.rs"
+required-features = [ "cli" ]
+
+[dependencies]
+# Used for de-/serializing internal file structures
+serde = { version = "1.0.110", features = [ "derive" ] }
+rmpv = "1.0.0"
+rmp-serde = "1.0.0-beta.2"
+bincode = "1.3.3"
+# Used for compression
+zstd = "0.9.0"
+# Used for checksums
+blake3 = "1.0.0"
+
+[dependencies.globwalk]
+version = "0.8.1"
+optional = true
+
+[dependencies.clap]
+version = "3.0.0-beta.4"
+optional = true
+
+[dependencies.cli-table]
+version = "0.4.6"
+optional = true
+
+# Used for handling dates
+[dependencies.chrono]
+version = "0.4.11"
+features = [ "serde" ]
+
+[dependencies.aes-ctr]
+version = "*"
+optional = true
+
+[features]
+aes = [ "aes-ctr" ]
+cli = [
+    "globwalk",
+    "clap",
+    "cli-table"
+]
