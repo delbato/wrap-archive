@@ -6,9 +6,9 @@ use std::io::{
 };
 use std::path::PathBuf;
 
-extern crate wrap_archive;
+extern crate wrap;
 
-use wrap_archive::Archive;
+use wrap::Archive;
 
 #[test]
 fn test_reader_image_compressed() -> Result<(), Box<dyn Error>> {

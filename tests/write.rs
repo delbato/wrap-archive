@@ -1,4 +1,4 @@
-extern crate wrap_archive;
+extern crate wrap;
 
 use std::error::Error;
 use std::fs::File as StdFile;
@@ -7,8 +7,8 @@ use std::io::{
     Write,
 };
 
-use wrap_archive::blake3::Hasher;
-use wrap_archive::{
+use wrap::blake3::Hasher;
+use wrap::{
     Compression,
     Writer,
 };

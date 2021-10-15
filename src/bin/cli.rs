@@ -1,4 +1,4 @@
-extern crate wrap_archive;
+extern crate wrap;
 
 extern crate clap;
 extern crate cli_table;
@@ -18,7 +18,7 @@ use cli_table::{
     Style,
     Table,
 };
-use wrap_archive::Archive;
+use wrap::Archive;
 
 macro_rules! int_len {
     ($int:ident) => {
@@ -32,15 +32,15 @@ macro_rules! unit {
     ($int:ident) => {
         {
             if int_len!($int) >= 11 {
-                "GB"
+                "GiB"
             } else if int_len!($int) >= 8 {
-                "MB"
+                "MiB"
             } else if int_len!($int) >= 5 {
-                "KB"
+                "KiB"
             } else {
                 "B"
             }
-        };
+        }
     };
 }
 
@@ -48,9 +48,9 @@ macro_rules! size_format {
     ($int:ident, $unit:ident) => {
         {
             let size = match $unit {
-                "GB" => (($int / 1024) / 1024) / 1024,
-                "MB" => ($int / 1024) / 1024,
-                "KB" => $int / 1024,
+                "GiB" => (($int / 1024) / 1024) / 1024,
+                "MiB" => ($int / 1024) / 1024,
+                "KiB" => $int / 1024,
                 _ => $int
             };
             format!("{}{}", size, $unit)

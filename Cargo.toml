@@ -12,6 +12,10 @@ exclude = [
     "tests/"
 ]
 
+[lib]
+path = "src/lib.rs"
+name = "wrap"
+
 [[bin]]
 name = "wrap"
 path = "src/bin/cli.rs"
