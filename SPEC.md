@@ -1,3 +1,3 @@
-# .VAR File structure
+# .WRAP File structure
 
 _TODO: insert file specification here_
