@@ -89,7 +89,14 @@ struct PackArgs {
 
 #[derive(Clap)]
 #[clap(about = "Unpacks contents of an .wrap archive file")]
-struct UnpackArgs {}
+struct UnpackArgs {
+    #[clap(index = 1, about = "Path to the .wrap archive")]
+    input: PathBuf,
+    #[clap(index = 2, about = "Files to unpack from the archive")]
+    files: Vec<String>,
+    #[clap(short, long, about = "Path to unpack the contents to")]
+    output: Option<PathBuf>
+}
 
 #[derive(Clap)]
 #[clap(about = "Lists contents of an .wrap archive file")]

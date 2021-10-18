@@ -3,6 +3,8 @@
 
 #[cfg(feature = "aes")]
 extern crate aes_ctr;
+#[cfg(feature = "ffi")]
+extern crate libc;
 extern crate bincode;
 pub extern crate blake3;
 
@@ -14,6 +16,10 @@ pub mod write;
 
 /// Shared functionality module
 pub mod shared;
+
+/// FFI module
+#[cfg(feature = "ffi")]
+pub mod ffi;
 
 pub use read::archive::Archive;
 pub use read::file::File;

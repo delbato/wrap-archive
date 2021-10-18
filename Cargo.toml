@@ -1,3 +1,7 @@
+cargo-features = [
+    "strip"
+]
+
 [package]
 name = "wrap-archive"
 version = "0.1.1"
@@ -5,16 +9,27 @@ authors = ["Daniel Wanner <daniel.wanner@pm.me>"]
 edition = "2018"
 description = "An archive container format"
 readme = "README.md"
-
 exclude = [
     ".vscode",
     ".gitignore",
     "tests/"
 ]
+build = "build.rs"
+
+[profile.release]
+opt-level = 'z'     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations.
+panic = 'abort' 
 
 [lib]
 path = "src/lib.rs"
 name = "wrap"
+crate-type = [
+    "lib",
+    "staticlib",
+    "cdylib"
+]
 
 [[bin]]
 name = "wrap"
@@ -38,6 +53,10 @@ optional = true
 version = "3.0.0-beta.4"
 optional = true
 
+[dependencies.libc]
+version = "0.2.104"
+optional = true
+
 [dependencies.cli-table]
 version = "0.4.6"
 optional = true
@@ -51,8 +70,16 @@ features = [ "serde" ]
 version = "*"
 optional = true
 
+[build-dependencies.cbindgen]
+version = "0.20.0"
+optional = true
+
 [features]
 aes = [ "aes-ctr" ]
+ffi = [
+    "libc",
+    "cbindgen"
+]
 cli = [
     "globwalk",
     "clap",
