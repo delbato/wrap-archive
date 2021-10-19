@@ -3,7 +3,9 @@ use std::io::{
     Seek,
     SeekFrom,
 };
+use std::fs::File as StdFile;
 use std::ops::Range;
+use std::path::Path;
 
 use bincode::deserialize_from as bincode_read;
 
@@ -25,6 +27,16 @@ pub struct Archive<R: Read + Seek> {
     directory: Directory,
 }
 
+impl Archive<StdFile> {
+    /// Opens an archive file at a given Path
+    pub fn open<'p, P: Into<&'p Path>>(path: P) -> Result<Self> {
+        let path = path.into();
+        let file = StdFile::open(path)
+            .map_err(|_| Error::Unknown)?;
+        Self::new(file)
+    }
+}
+
 impl<'r, R: Read + Seek + 'r> Archive<R> {
     /// Creates a new archive, wrapping the given source
     pub fn new(mut source: R) -> Result<Self> {
@@ -36,18 +48,8 @@ impl<'r, R: Read + Seek + 'r> Archive<R> {
         if &magic_bytes != b"WRAP" {
             return Err(Error::IncorrectMagicBytes(magic_bytes));
         }
-        let header: ArchiveHeader = bincode_read(&mut source).map_err(|_| Error::CorruptHeader)?;
-        // // Prepare the buffer
-        // let mut directory_bytes: Vec<u8> = vec![];
-        // let directory_len = (header.directory.end - header.directory.start) as usize;
-        // directory_bytes.resize(directory_len, 0);
-        // // Jump to the start of the directory
-        // source.seek(SeekFrom::Start(header.directory.start))
-        //     .map_err(|_| Error::Unknown)?;
-        // // Read the bytes
-        // source.read_exact(&mut directory_bytes)
-        //     .map_err(|_| Error::CantReadDirectory)?;
-        // // Parse the directory
+        let header: ArchiveHeader = bincode_read(&mut source)
+            .map_err(|_| Error::CorruptHeader)?;
         let dir_begin = header.directory_range.start;
         source
             .seek(SeekFrom::Start(dir_begin))

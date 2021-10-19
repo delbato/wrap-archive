@@ -1,14 +1,14 @@
 #[cfg(feature = "ffi")]
 extern crate cbindgen;
 
-use std::{fmt::Write as FmtWrite, io::Write, fs::{ OpenOptions } , path::PathBuf};
-
-use cbindgen::{Builder, Language};
+use std::path::PathBuf;
 
 fn main() {
     let out_dir = PathBuf::from("target");
     #[cfg(feature = "ffi")]
     {
+        use cbindgen::{Builder, Language};
+
         Builder::new()
             .with_crate("./")
             .with_language(Language::C)
